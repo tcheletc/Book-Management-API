@@ -14,7 +14,7 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/tcheletc/book-api.git
+   git clone https://github.com/tcheletc/Book-Management-API.git
    cd book-api
    ```
 
