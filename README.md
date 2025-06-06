@@ -27,6 +27,7 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 3. Create the database:
  
 	```bash
+ 	cd BookApi
 	dotnet ef database update
 	```
 
