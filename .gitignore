@@ -1,0 +1,58 @@
+## Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+
+## Build results
+bin/
+obj/
+out/
+
+## NuGet packages
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+project.fragment.lock.json
+
+## Entity Framework Migrations (optional: keep if you need!)
+# Migrations/
+
+## Dotnet artifacts
+*.dll
+*.exe
+*.pdb
+
+## ASP.NET Core secrets
+secrets.json
+
+## Logs
+*.log
+logs/
+
+## OS Files
+.DS_Store
+Thumbs.db
+
+## SQLite database file
+*.db
+*.db-shm
+*.db-wal
+
+## Rider / JetBrains
+.idea/
+*.sln.iml
+
+## User-specific files
+*.swp
+*.bak
+*.tmp
+
+## git settings
+*.orig
+
+## node/npm (in case of JS frontend or Swagger tooling)
+node_modules/
+npm-debug.log
+yarn-error.log
