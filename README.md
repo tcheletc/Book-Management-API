@@ -110,8 +110,8 @@ dotnet ef database update
 	- Edge cases like empty search, pagination beyond data range
 - Custom annotation [NotDefaultOrFutureDate] tested for all edge cases
 
-To run the tests:
+To run the tests (from the solution folder - Book-Management-API):
 ```bash
-cd BookApi.Tests
+cd Tests
 dotnet test
 ```
