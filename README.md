@@ -14,8 +14,8 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 1. Clone the repository:
 
    ```bash
-   	git clone https://github.com/tcheletc/Book-Management-API.git
-	cd Book-Management-API
+   git clone https://github.com/tcheletc/Book-Management-API.git
+   cd Book-Management-API
    ```
 
 2. Restore dependencies:
@@ -27,7 +27,6 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 3. Create the database:
  
 	```bash
-	cd BookApi
 	dotnet ef database update
 	```
 
