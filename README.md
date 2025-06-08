@@ -1,10 +1,10 @@
 # Book Management API
 
-Book Management System built with .NET 8, Entity Framework Core, and SQLite using Minimal APIs.
+Book Management System built with .NET 8, Entity Framework Core, and SQLite using controllers.
 
 ## Technologies
 
-- .NET 8
+- ASP.NET Core 8 (with controllers)
 - Entity Framework Core
 - SQLite
 - Swagger
@@ -61,14 +61,15 @@ GET /api/books?page=1&pageSize=0
 
 ## Assumptions
 
-- SQLite is used for simplicity and portability.
-- No authentication or authorization implemented.
-- Minimal API used instead of traditional controllers.
+- All books must contain a title, author, publication date, and price
+- A future publication date for a book is prohibited
+- The books are sorted by author name and then by book title
+- Search is case insensitive
 
 ## Development Decisions
 
-- Entity Framework Core with code-first approach
-- Minimal API chosen for cleaner and simpler API structure
+- SQLite is used for simplicity and portability
+- Controllers used instead of Minimal API
 - Swagger is enabled by default
 
 ## Future Improvements
