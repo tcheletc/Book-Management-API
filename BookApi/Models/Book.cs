@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BookApi.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookApi.Models
 {
@@ -12,6 +13,7 @@ namespace BookApi.Models
         [Required, MinLength(2)]
         public string Author { get; set; } = string.Empty;
 
+        [NotDefaultOrFutureDate]
         public DateTime PublicationDate { get; set; }
 
         [Range(0.01, double.MaxValue)]

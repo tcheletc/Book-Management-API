@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookApi.Services
 {
-    public class BookService
+    public class BookService : IBookService
     {
         private readonly BookContext _context;
 

@@ -4,10 +4,12 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 
 ## Technologies
 
-- ASP.NET Core 8 (with controllers)
-- Entity Framework Core
-- SQLite
-- Swagger
+- ASP.NET Core 8 (Controllers)
+- Entity Framework Core 8
+- SQLite (can be replaced with SQL Server)
+- Swagger / OpenAPI
+- xUnit for Unit Testing
+- Moq (for mocking in tests)
 
 ## Setup Instructions
 
@@ -36,6 +38,7 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 	```bash
 	dotnet run
 	```
+	The app should be available at: http://localhost:5188/swagger
 
 ## API Endpoints
 
@@ -60,25 +63,34 @@ GET /api/books/search?q=Rowling
 GET /api/books?page=1&pageSize=0
 ```
 
+## Validation Rules
+
+- All fields are required: Title, Author, PublicationDate, Price
+- PublicationDate:
+	- Cannot be the default date
+	- Cannot be in the future
+- Case-insensitive search by title or author
+- Sorting: books are sorted first by author, then by title
+
 ## Assumptions
 
-- All books must contain a title, author, publication date, and price
-- A future publication date for a book is prohibited
-- The books are sorted by author name and then by book title
-- Search is case insensitive
+- The app assumes valid input for creating and updating books
+- Invalid input returns proper 400 BadRequest responses
+- The database is initially empty
 
 ## Development Decisions
 
 - SQLite is used for simplicity and portability
 - Controllers used instead of Minimal API
 - Swagger is enabled by default
+- Created a custom validation attribute for PublicationDate
+- Layered architecture: Controllers → Services → DbContext
 
 ## Future Improvements
 
 - Add authentication/authorization (e.g. JWT)
-- Add sorting and filtering by additional fields
-- Add unit and integration tests
-- Support SQL Server
+- Add full filtering and sorting support
+- Add full integration tests
 - Add Docker support
 
 ## Migrations
@@ -88,4 +100,18 @@ To add a new migration:
 ```bash
 dotnet ef migrations add <MigrationName>
 dotnet ef database update
+```
+
+## Tests
+
+- CRUD operations tested via BooksControllerTests
+- BookServiceTests include:
+	- Valid and invalid queries
+	- Edge cases like empty search, pagination beyond data range
+- Custom annotation [NotDefaultOrFutureDate] tested for all edge cases
+
+To run the tests:
+```bash
+cd BookApi.Tests
+dotnet test
 ```

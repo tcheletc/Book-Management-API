@@ -9,9 +9,9 @@ namespace BookApi.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        private readonly BookService _service;
+        private readonly IBookService _service;
 
-        public BooksController(BookService service)
+        public BooksController(IBookService service)
         {
             _service = service;
         }
@@ -39,9 +39,6 @@ namespace BookApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            if (book.PublicationDate == default || book.PublicationDate > DateTime.Now)
-                return BadRequest("Non-future Publication date is required.");
-
             var created = await _service.AddAsync(book);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
@@ -51,9 +48,6 @@ namespace BookApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            if (book.PublicationDate == default || book.PublicationDate > DateTime.Now)
-                return BadRequest("Non-future Publication date is required.");
 
             var success = await _service.UpdateAsync(id, book);
             return success ? NoContent() : NotFound();
@@ -70,7 +64,7 @@ namespace BookApi.Controllers
         public async Task<IActionResult> Search([FromQuery] string? query)
         {
             if (string.IsNullOrWhiteSpace(query))
-                return BadRequest("Query is empty");
+                return BadRequest("Query must not be empty");
 
             var results = await _service.SearchAsync(query);
             return Ok(results);
