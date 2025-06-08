@@ -29,6 +29,7 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 3. Run the app:
  
 	```bash
+ 	cd BookApi
 	dotnet run
 	```
 	The app is available at: http://localhost:8081/swagger
