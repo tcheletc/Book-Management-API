@@ -121,7 +121,7 @@ namespace BookApi.Tests.Controllers
 
             // Forces the controller to state that the model is invalid (as if ModelState.IsValid == false)
             controller.ModelState.AddModelError("Title", "Required");
-            controller.ModelState.AddModelError("PublicationDate", "The date must be valid (not default or in the future)");
+            controller.ModelState.AddModelError("PublicationDate", "The date must be valid (not empty or in the future)");
             controller.ModelState.AddModelError("Price", "Must be non-negative");
 
             // Act
@@ -173,7 +173,7 @@ namespace BookApi.Tests.Controllers
 
             // Forces the controller to state that the model is invalid (as if ModelState.IsValid == false)
             controller.ModelState.AddModelError("Title", "Required");
-            controller.ModelState.AddModelError("PublicationDate", "The date must be valid (not default or in the future)");
+            controller.ModelState.AddModelError("PublicationDate", "The date must be valid (not empty or in the future)");
             controller.ModelState.AddModelError("Price", "Must be non-negative");
 
             // Act

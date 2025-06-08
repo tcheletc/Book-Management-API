@@ -26,30 +26,38 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 	dotnet restore
 	```
 
-3. Create the database:
- 
-	```bash
-	cd BookApi
-	dotnet ef database update
-	```
-
-4. Run the app:
+3. Run the app:
  
 	```bash
 	dotnet run
 	```
-	The app should be available at: http://localhost:5188/swagger
+	The app is available at: http://localhost:8081/swagger
+
+## Run with Docker
+
+1. Build the Docker image:
+	```bash
+	docker build -t bookapi .
+	```
+
+2. Run the container:
+	```bash
+	docker run -p 5000:8081 -e ASPNETCORE_ENVIRONMENT=Development bookapi
+	```
+
+3. Access the API:
+	Open your browser at: http://localhost:5000/swagger
 
 ## API Endpoints
 
-| Method | Endpoint               | Description               |
-| ------ | ---------------------- | ------------------------- |
-| GET    | `/api/books`           | Get all books (paginated) |
-| GET    | `/api/books/{id}`      | Get book by ID            |
-| POST   | `/api/books`           | Create new book           |
-| PUT    | `/api/books/{id}`      | Update existing book      |
-| DELETE | `/api/books/{id}`      | Delete book               |
-| GET    | `/api/books/search?q=` | Search by title or author |
+| Method | Endpoint               | Description			                  |
+| ------ | ---------------------- | ------------------------------------- |
+| GET    | `/api/books`           | Get all books (paginated)			  |
+| GET    | `/api/books/{id}`      | Get book by ID 			              |
+| POST   | `/api/books`           | Create new book			              |
+| PUT    | `/api/books/{id}`      | Update existing book			      |
+| DELETE | `/api/books/{id}`      | Delete book			                  |
+| GET    | `/api/books/search?q=` | Search by title or author (substring) |
 
 ### Example: Search Books
 
@@ -60,14 +68,14 @@ GET /api/books/search?q=Rowling
 ### Pagination Parameters
 
 ```bash
-GET /api/books?page=1&pageSize=0
+GET /api/books?page=1&pageSize=10
 ```
 
 ## Validation Rules
 
 - All fields are required: Title, Author, PublicationDate, Price
 - PublicationDate:
-	- Cannot be the default date
+	- Cannot be the empty date
 	- Cannot be in the future
 - Case-insensitive search by title or author
 - Sorting: books are sorted first by author, then by title
@@ -80,9 +88,10 @@ GET /api/books?page=1&pageSize=0
 
 ## Development Decisions
 
-- SQLite is used for simplicity and portability
-- Controllers used instead of Minimal API
-- Swagger is enabled by default
+- SQLite is used for simplicity
+- Controllers used instead of Minimal API for clarity and testability
+- Swagger is enabled in development
+- Docker support added for easy deployment
 - Created a custom validation attribute for PublicationDate
 - Layered architecture: Controllers → Services → DbContext
 
@@ -91,7 +100,7 @@ GET /api/books?page=1&pageSize=0
 - Add authentication/authorization (e.g. JWT)
 - Add full filtering and sorting support
 - Add full integration tests
-- Add Docker support
+- Add Docker Compose for database and API together
 
 ## Migrations
 

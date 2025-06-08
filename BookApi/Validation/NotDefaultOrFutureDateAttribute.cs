@@ -6,7 +6,7 @@ namespace BookApi.Validation
     {
         public NotDefaultOrFutureDateAttribute()
         {
-            ErrorMessage = "The date must be valid (not default or in the future)";
+            ErrorMessage = "The date must be valid (not empty or in the future)";
         }
 
         public override bool IsValid(object? value)
