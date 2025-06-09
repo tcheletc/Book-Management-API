@@ -42,7 +42,7 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 	docker build -t bookapi .
 	```
 
-2. Run the container:
+2. Run the container (in development mode):
 	```bash
 	docker run -p 5000:8081 -e ASPNETCORE_ENVIRONMENT=Development bookapi
 	```
