@@ -10,6 +10,7 @@ Book Management System built with .NET 8, Entity Framework Core, and SQLite usin
 - Swagger / OpenAPI
 - xUnit for Unit Testing
 - Moq (for mocking in tests)
+- Docker
 
 ## Setup Instructions
 

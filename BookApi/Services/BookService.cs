@@ -4,16 +4,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookApi.Services
 {
+    /// <summary>
+    /// Service that handles operations related to books in the database.
+    /// </summary>
     public class BookService : IBookService
     {
         private readonly BookContext _context;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BookService"/> class.
+        /// </summary>
+        /// <param name="context">The database context.</param>
         public BookService(BookContext context)
         {
             _context = context;
         }
 
-        // The function returns all books in the database (paginated)
+        /// <summary>
+        /// Retrieves all books from the database ordered by author and title, with pagination.
+        /// </summary>
+        /// <param name="page">The page number (1-based).</param>
+        /// <param name="pageSize">The number of items per page.</param>
+        /// <returns>A list of books.</returns>
         public async Task<List<Book>> GetAllAsync(int page = 1, int pageSize = 10)
         {
             return await _context.Books
@@ -24,13 +36,21 @@ namespace BookApi.Services
                 .ToListAsync();
         }
 
-        // The function returns a book from the database by ID
+        /// <summary>
+        /// Retrieves a book by its ID.
+        /// </summary>
+        /// <param name="id">The book ID.</param>
+        /// <returns>The book if found; otherwise, null.</returns>
         public async Task<Book?> GetByIdAsync(int id)
         {
             return await _context.Books.FindAsync(id);
         }
 
-        //The function adds the received book as a parameter to the database, and returns it
+        /// <summary>
+        /// Adds a new book to the database.
+        /// </summary>
+        /// <param name="book">The book to add.</param>
+        /// <returns>The added book.</returns>
         public async Task<Book> AddAsync(Book book)
         {
             _context.Books.Add(book);
@@ -38,9 +58,12 @@ namespace BookApi.Services
             return book;
         }
 
-        // The function updates the book with the ID received as a parameter
-        // with the details of the book received as a parameter
-        // and returns whether the update was successful.
+        /// <summary>
+        /// Updates an existing book with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the book to update.</param>
+        /// <param name="updatedBook">The updated book details.</param>
+        /// <returns>True if the update was successful; otherwise, false.</returns>
         public async Task<bool> UpdateAsync(int id, Book updatedBook)
         {
             var book = await _context.Books.FindAsync(id);
@@ -56,8 +79,11 @@ namespace BookApi.Services
             return true;
         }
 
-        // The function deletes the book with the ID number received as a parameter from the database
-        // and returns whether the deletion was successful.
+        /// <summary>
+        /// Deletes a book by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the book to delete.</param>
+        /// <returns>True if the deletion was successful; otherwise, false.</returns>
         public async Task<bool> DeleteAsync(int id)
         {
             var book = await _context.Books.FindAsync(id);
@@ -69,8 +95,11 @@ namespace BookApi.Services
             return true;
         }
 
-        // The function searches (case insensitive) the database for books by title or author name
-        // and returns the list of books that match the search.
+        /// <summary>
+        /// Searches for books by title or author (case-insensitive).
+        /// </summary>
+        /// <param name="query">The search query string.</param>
+        /// <returns>A list of books that match the search criteria.</returns>
         public async Task<List<Book>> SearchAsync(string query)
         {
             query = query.ToLower();

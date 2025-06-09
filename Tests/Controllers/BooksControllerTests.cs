@@ -6,6 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookApi.Tests.Controllers
 {
+    /// <summary>
+    /// Unit tests for the <see cref="BooksController"/> class.
+    /// These tests verify the controller's behavior for CRUD operations and search functionality,
+    /// including responses to valid and invalid input, pagination, and model validation.
+    /// The controller is tested in isolation using a mocked <see cref="IBookService"/>.
+    /// </summary>
     public class BooksControllerTests
     {
         private readonly Mock<IBookService> _mockService;
@@ -17,6 +23,9 @@ namespace BookApi.Tests.Controllers
             _controller = new BooksController(_mockService.Object);
         }
 
+        /// <summary>
+        /// Tests that GetAll returns a list of books when the page contains results.
+        /// </summary>
         [Fact]
         public async Task GetAll_ReturnsBooks_WhenPageHasResults()
         {
@@ -40,6 +49,9 @@ namespace BookApi.Tests.Controllers
             Assert.Equal("Book 1", books[0].Title);
         }
 
+        /// <summary>
+        /// Tests that GetAll returns an empty list when the page has no results.
+        /// </summary>
         [Fact]
         public async Task GetAll_ReturnsEmptyList_WhenPageHasNoResults()
         {
@@ -56,6 +68,9 @@ namespace BookApi.Tests.Controllers
             Assert.Empty(books);
         }
 
+        /// <summary>
+        /// Tests that GetAll returns a BadRequest when page or pageSize are invalid.
+        /// </summary>
         [Theory]
         [InlineData(-1, 5)] // page < 1
         [InlineData(1, -10)] // pageSize < 1
@@ -67,6 +82,9 @@ namespace BookApi.Tests.Controllers
             Assert.Equal("Page and pageSize must be positive integers", badRequest.Value);
         }
 
+        /// <summary>
+        /// Tests that GetById returns a book when it exists.
+        /// </summary>
         [Fact]
         public async Task GetById_ReturnsBook_WhenExists()
         {
@@ -80,6 +98,9 @@ namespace BookApi.Tests.Controllers
             Assert.Equal(expectedBook.Id, book.Id);
         }
 
+        /// <summary>
+        /// Tests that GetById returns NotFound when the book does not exist.
+        /// </summary>
         [Fact]
         public async Task GetById_ReturnsNotFound_WhenMissing()
         {
@@ -90,6 +111,9 @@ namespace BookApi.Tests.Controllers
             Assert.IsType<NotFoundResult>(result);
         }
 
+        /// <summary>
+        /// Tests that Create returns CreatedAtAction when the input is valid.
+        /// </summary>
         [Fact]
         public async Task Create_ReturnsCreatedAt_WhenValid()
         {
@@ -105,6 +129,9 @@ namespace BookApi.Tests.Controllers
             Assert.Equal(42, book.Id);
         }
 
+        /// <summary>
+        /// Tests that Create returns BadRequest when the model is invalid.
+        /// </summary>
         [Fact]
         public async Task Create_ReturnsBadRequest_WhenModelIsInvalid()
         {
@@ -132,7 +159,9 @@ namespace BookApi.Tests.Controllers
             Assert.IsType<SerializableError>(badRequest.Value);
         }
 
-
+        /// <summary>
+        /// Tests that Update returns NoContent when the update succeeds.
+        /// </summary>
         [Fact]
         public async Task Update_ReturnsNoContent_WhenSuccessful()
         {
@@ -145,6 +174,9 @@ namespace BookApi.Tests.Controllers
             Assert.IsType<NoContentResult>(result);
         }
 
+        /// <summary>
+        /// Tests that Update returns NotFound when the book does not exist.
+        /// </summary>
         [Fact]
         public async Task Update_ReturnsNotFound_WhenNotExists()
         {
@@ -157,6 +189,9 @@ namespace BookApi.Tests.Controllers
             Assert.IsType<NotFoundResult>(result);
         }
 
+        /// <summary>
+        /// Tests that Update returns BadRequest when the model is invalid.
+        /// </summary>
         [Fact]
         public async Task Update_ReturnsBadRequest_WhenModelIsInvalid()
         {
@@ -184,6 +219,9 @@ namespace BookApi.Tests.Controllers
             Assert.IsType<SerializableError>(badRequest.Value);
         }
 
+        /// <summary>
+        /// Tests that Delete returns NoContent when deletion is successful.
+        /// </summary>
         [Fact]
         public async Task Delete_ReturnsNoContent_WhenDeleted()
         {
@@ -194,6 +232,9 @@ namespace BookApi.Tests.Controllers
             Assert.IsType<NoContentResult>(result);
         }
 
+        /// <summary>
+        /// Tests that Delete returns NotFound when the book does not exist.
+        /// </summary>
         [Fact]
         public async Task Delete_ReturnsNotFound_WhenMissing()
         {
@@ -204,6 +245,9 @@ namespace BookApi.Tests.Controllers
             Assert.IsType<NotFoundResult>(result);
         }
 
+        /// <summary>
+        /// Tests that Search returns matching books when found.
+        /// </summary>
         [Fact]
         public async Task Search_ReturnsMatchingBooks()
         {
@@ -222,6 +266,9 @@ namespace BookApi.Tests.Controllers
             Assert.Equal(2, books.Count);
         }
 
+        /// <summary>
+        /// Tests that Search returns an empty list when no matches are found.
+        /// </summary>
         [Fact]
         public async Task Search_ReturnsEmptyList_WhenNoResults()
         {
@@ -238,6 +285,9 @@ namespace BookApi.Tests.Controllers
             Assert.Empty(books);
         }
 
+        /// <summary>
+        /// Tests that Search returns BadRequest when the query string is empty.
+        /// </summary>
         [Fact]
         public async Task Search_ReturnsBadRequest_WhenQueryIsEmpty()
         {

@@ -2,13 +2,14 @@
 using BookApi.Models;
 using BookApi.Services;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Xunit;
 
 namespace BookApi.Tests.Services
 {
+    /// <summary>
+    /// Unit tests for the <see cref="BookService"/> class.
+    /// These tests verify the behavior of service methods such as retrieving, creating,
+    /// updating, deleting, and searching books using an in-memory database.
+    /// </summary>
     public class BookServiceTests : IDisposable
     {
         private readonly BookContext _context;
@@ -26,6 +27,9 @@ namespace BookApi.Tests.Services
 
         public void Dispose() => _context.Dispose();
 
+        /// <summary>
+        /// Verifies that GetAllAsync returns the correct number of items per page.
+        /// </summary>
         [Fact]
         public async Task GetAllAsync_ReturnsPagedResults()
         {
@@ -48,6 +52,9 @@ namespace BookApi.Tests.Services
             Assert.Equal(5, page2.Count);
         }
 
+        /// <summary>
+        /// Verifies that GetAllAsync returns an empty list when requesting a page beyond the data range.
+        /// </summary>
         [Fact]
         public async Task GetAllAsync_ReturnsEmptyList_WhenPageOutOfRange()
         {
@@ -67,6 +74,9 @@ namespace BookApi.Tests.Services
             Assert.Empty(result);
         }
 
+        /// <summary>
+        /// Verifies that GetByIdAsync returns the correct book when it exists.
+        /// </summary>
         [Fact]
         public async Task GetByIdAsync_ReturnsBook_WhenExists()
         {
@@ -80,6 +90,9 @@ namespace BookApi.Tests.Services
             Assert.Equal(book.Title, result!.Title);
         }
 
+        /// <summary>
+        /// Verifies that GetByIdAsync returns null when the book does not exist.
+        /// </summary>
         [Fact]
         public async Task GetByIdAsync_ReturnsNull_WhenNotExists()
         {
@@ -87,6 +100,9 @@ namespace BookApi.Tests.Services
             Assert.Null(result);
         }
 
+        /// <summary>
+        /// Verifies that AddAsync successfully adds a new book to the database.
+        /// </summary>
         [Fact]
         public async Task AddAsync_AddsBook()
         {
@@ -104,6 +120,9 @@ namespace BookApi.Tests.Services
             Assert.Single(_context.Books);
         }
 
+        /// <summary>
+        /// Verifies that UpdateAsync updates an existing book correctly.
+        /// </summary>
         [Fact]
         public async Task UpdateAsync_UpdatesBook_WhenExists()
         {
@@ -127,6 +146,9 @@ namespace BookApi.Tests.Services
             Assert.Equal("Updated", saved!.Title);
         }
 
+        /// <summary>
+        /// Verifies that UpdateAsync returns false when trying to update a nonexistent book.
+        /// </summary>
         [Fact]
         public async Task UpdateAsync_ReturnsFalse_WhenBookNotFound()
         {
@@ -134,6 +156,9 @@ namespace BookApi.Tests.Services
             Assert.False(result);
         }
 
+        /// <summary>
+        /// Verifies that DeleteAsync deletes a book successfully when it exists.
+        /// </summary>
         [Fact]
         public async Task DeleteAsync_DeletesBook_WhenExists()
         {
@@ -147,6 +172,9 @@ namespace BookApi.Tests.Services
             Assert.Null(await _context.Books.FindAsync(book.Id));
         }
 
+        /// <summary>
+        /// Verifies that DeleteAsync returns false when trying to delete a nonexistent book.
+        /// </summary>
         [Fact]
         public async Task DeleteAsync_ReturnsFalse_WhenBookNotFound()
         {
@@ -154,6 +182,9 @@ namespace BookApi.Tests.Services
             Assert.False(result);
         }
 
+        /// <summary>
+        /// Verifies that SearchAsync returns books that match the query in a case-insensitive way.
+        /// </summary>
         [Fact]
         public async Task SearchAsync_ReturnsMatchingBooks_CaseInsensitive()
         {
@@ -169,6 +200,9 @@ namespace BookApi.Tests.Services
             Assert.Equal(2, results.Count);
         }
 
+        /// <summary>
+        /// Verifies that SearchAsync returns an empty list when no books match the query.
+        /// </summary>
         [Fact]
         public async Task SearchAsync_ReturnsEmptyList_WhenNoMatch()
         {

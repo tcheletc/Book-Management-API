@@ -2,6 +2,11 @@
 
 namespace BookApi.Tests.Validation
 {
+    /// <summary>
+    /// Unit tests for the <see cref="NotDefaultOrFutureDateAttribute"/> validation attribute.
+    /// These tests verify that the attribute correctly validates DateTime values,
+    /// rejecting default or future dates and accepting valid past or present dates.
+    /// </summary>
     public class NotDefaultOrFutureDateAttributeTests
     {
         private readonly NotDefaultOrFutureDateAttribute _attribute;
@@ -11,6 +16,9 @@ namespace BookApi.Tests.Validation
             _attribute = new NotDefaultOrFutureDateAttribute();
         }
 
+        /// <summary>
+        /// Verifies that IsValid returns false when the date is the default value (DateTime.MinValue).
+        /// </summary>
         [Fact]
         public void IsValid_ReturnsFalse_WhenDateIsDefault()
         {
@@ -18,6 +26,9 @@ namespace BookApi.Tests.Validation
             Assert.False(result);
         }
 
+        /// <summary>
+        /// Verifies that IsValid returns false when the date is in the future.
+        /// </summary>
         [Fact]
         public void IsValid_ReturnsFalse_WhenDateIsInFuture()
         {
@@ -26,6 +37,9 @@ namespace BookApi.Tests.Validation
             Assert.False(result);
         }
 
+        /// <summary>
+        /// Verifies that IsValid returns true when the date is today or in the past.
+        /// </summary>
         [Fact]
         public void IsValid_ReturnsTrue_WhenDateIsTodayOrPast()
         {
@@ -34,6 +48,9 @@ namespace BookApi.Tests.Validation
             Assert.True(result);
         }
 
+        /// <summary>
+        /// Verifies that IsValid returns false when the input value is not a DateTime instance.
+        /// </summary>
         [Fact]
         public void IsValid_ReturnsFalse_WhenValueIsNotDateTime()
         {
